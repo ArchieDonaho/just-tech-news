@@ -54,11 +54,36 @@ router.post('/', (req, res) => {
     });
 });
 
+//POST /api/users/login
+router.post('/login', (req, res) => {
+  //expects req.body={email: <value>, password: <value>}
+  User.findOne({
+    where: {
+      email: req.body.email
+    }
+  })
+    .then(dbUserData=>{
+      if(!dbUserData){
+        res.status(400).json({ message: 'No user with that email adress' });
+        return;
+      }
+      // res.json({ user: dbUserData });
+      //verify the user using the instance method, returns a true or false
+      const validPassword = dbUserData.checkPassword(req.body.password);
+      if(!validPassword){
+        res.status(400).json({ message: 'Incorrect password' });
+        return;
+      }
+      res.json({ user: dbUserData, message: 'You are now logged in' })
+    })
+});
+
 //PUT /api/users/1
 router.put('/:id', (req, res) => {
   //expects req.body={username: <value>, email: <value>, password: <value>}
     //if req.body has exact key/value pairs to match the model, you can just use 'req.body' idstead
   User.update(req.body, {
+    individualHooks: true,
     where: {
       id: req.params.id
     }
@@ -68,6 +93,7 @@ router.put('/:id', (req, res) => {
         res.status(400).json({ message: 'No user found with this id' });
         return;
       }
+      res.json(dbUserData);
     })
     .catch(err=>{
       console.log(err);

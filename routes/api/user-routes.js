@@ -1,6 +1,6 @@
 const router = require('express').Router();
 //'User' comes from 'db.User', so we destructure it
-const { User } = require('../../models')
+const { User } = require('../../models');
  
 // GET /api/users
 router.get('/', (req, res) => {
@@ -49,8 +49,8 @@ router.post('/', (req, res) => {
   )
     .then(dbUserData=>res.json(dbUserData))
     .catch(err=>{
-      console.log(err)
-      res.status(500).json(err)
+      console.log(err);
+      res.status(500).json(err);
     });
 });
 
@@ -75,7 +75,7 @@ router.post('/login', (req, res) => {
         return;
       }
       res.json({ user: dbUserData, message: 'You are now logged in' })
-    })
+    });
 });
 
 //PUT /api/users/1

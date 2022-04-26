@@ -13,6 +13,7 @@ app.use(routes);
 
 //turn on connection to db and server
   //'force: false' states that we DONT want to drop all tables on startup of the server
-sequelize.sync({ force: false }).then(()=>{
+  //'force: true' states that we DO want to drop all tables on startup and recreate them if there are any association changes
+sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, ()=> console.log(`Now Listening on port ${PORT}`));
 });

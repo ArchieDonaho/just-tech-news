@@ -2,7 +2,32 @@ const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
 //create post model
-class Post extends Model{}
+class Post extends Model{
+  //'static' indicates that the upvote method is one that's based on the 'Post' model and not an 'instance method' used on the User model
+  //this allows us to say 'Post.upvote()' isntead of '<instance of post>.upvote()'
+  //the 'req.body' and 'Vote' get passed in as arguments
+  static upvote(body, models){
+    return models.Vote.create({
+      user_id: body.user_id,
+      post_id: body.post_id
+    })
+      .then(() => {
+        return Post.findOne({
+          where: {
+            id: body.post_id
+          },
+          attributes: [
+            'id',
+            'post_url',
+            'title',
+            'created_at',
+            //use raw MySQL aggregate function query to get a count of how many votes the post has and return it under the name `vote_count`
+            [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+          ]
+        })
+      })
+  };
+};
 
 Post.init(
   {

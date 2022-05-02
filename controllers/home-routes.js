@@ -4,6 +4,7 @@ const { Post, User, Comment } = require('../models');
 
 //use the same GET route as we did with the api routes to get all posts
 router.get('/', (req, res) => {
+  console.log(req.session);
   Post.findAll({
     attributes: [
       'id', 
@@ -42,5 +43,12 @@ router.get('/', (req, res) => {
       res.status(500).json(err);
     });
 });
+
+//render the login page
+router.get('/login', (req, res) => {
+  if(!req.session.loggedIn){
+    res.render('login');
+  }
+})
 
 module.exports = router;

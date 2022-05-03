@@ -1,10 +1,10 @@
-async function logout(){
+async function logout() {
   const response = await fetch('/api/users/logout', {
     method: 'post',
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 'Content-Type': 'application/json' },
   });
 
-  if(response.ok){
+  if (response.ok) {
     //refresh the webpage after logging out
     document.location.replace('/');
   } else {

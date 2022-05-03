@@ -1,33 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Just Tech News</title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
-</head>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>Just Tech News</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
 
-<body>
-  <div class="wrapper">
-    <header>
-      <h1>
-        <a href="/">Just Tech News</a>
-      </h1>
-      <nav>
-        {{!-- since the logout wont be a webpage, we will use a button and style it similar to the login --}}
-        <button id="logout" class="btn-no-style">logout</button>
-        <a href="/login">login</a>
-      </nav>
-    </header>
-    <main>
-      {{{ body }}}
-    </main>
-    <footer>
-      Thanks for visiting!
-    </footer>
-  </div>
-  <script src="/javascript/logout.js"></script>
-</body>
+  <body>
+    <div class='wrapper'>
+      <header>
+        <h1>
+          <a href='/'>Just Tech News</a>
+        </h1>
+        {{! dynamically display the login/logout buttons based on if the user is logged in.out }}
+        <nav>
+          {{#if loggedIn}}
+            {{! since the logout wont be a webpage, we will use a button and style it similar to the login }}
+            <button id='logout' class='btn-no-style'>logout</button>
+          {{else}}
+            <a href='/login'>login</a>
+          {{/if}}
+        </nav>
+      </header>
+      <main>
+        {{{body}}}
+      </main>
+      <footer>
+        Thanks for visiting!
+      </footer>
+    </div>
+    {{#if loggedIn}}
+      <script src='/javascript/logout.js'></script>
+    {{/if}}
+  </body>
 
 </html>

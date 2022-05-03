@@ -16,6 +16,7 @@
         {{! dynamically display the login/logout buttons based on if the user is logged in.out }}
         <nav>
           {{#if loggedIn}}
+            <a href='/dashboard'>dashboard</a>
             {{! since the logout wont be a webpage, we will use a button and style it similar to the login }}
             <button id='logout' class='btn-no-style'>logout</button>
           {{else}}

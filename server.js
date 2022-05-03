@@ -5,9 +5,10 @@ const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const routes = require('./controllers');
 const sequelize = require('./config/connection');
+const helpers = require('./utils/helpers');
 
-//create handlebars object
-const hbs = exphbs.create({});
+//create handlebars object, and pass in the helpers we created
+const hbs = exphbs.create({ helpers });
 
 //create sessions object
 //secret should be assigned to a .env variable
